@@ -8,6 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { ApiService } from '../service/api.service';
 import {BrowserTestingModule} from '@angular/platform-browser/testing';
+import { LabelComponent } from '../components/label/label.component';
+import { TitleComponent } from '../components/title/title.component';
+import { ImageComponent } from '../components/image/image.component';
+import { HeaderCheckboxComponent } from '../components/header-checkbox/header-checkbox.component';
+import { WindowRef } from '../windowRef';
 
 describe('AppComponent', () => {
     let component: AppComponent;
@@ -102,18 +107,28 @@ describe('AppComponent', () => {
             AppComponent,
             CustomToolBarComponent,
             CheckboxComponent,
+            LabelComponent,
+            TitleComponent,
+            ImageComponent,
+            HeaderCheckboxComponent
         ],
-        providers: [{
+        providers: [
+            {
             provide: ApiService,
             useValue: mockApiService
-        },
+            },
+            WindowRef
         ],
         imports: [
             BrowserTestingModule,
             FormsModule,
             AgGridModule.withComponents([
                 CheckboxComponent,
-                CustomToolBarComponent
+                CustomToolBarComponent,
+                LabelComponent,
+                TitleComponent,
+                ImageComponent,
+                HeaderCheckboxComponent
             ])
         ]
         })
@@ -134,10 +149,4 @@ describe('AppComponent', () => {
         expect(component.gridOptions.api).toBeTruthy();
     });
 
-    it('the grid cells should be displayed', () => {
-        const appElement = fixture.nativeElement;
-        const cellElements = appElement.querySelectorAll('.ag-cell-value');
-        expect(cellElements.length).toEqual(8);
-        expect(cellElements[3].textContent).toEqual('Music video by Lil Wayne performing John. (C) 2011 Cash Money Records Inc.');
-    });
 });

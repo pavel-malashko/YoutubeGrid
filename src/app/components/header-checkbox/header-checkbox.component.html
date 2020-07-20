@@ -1,0 +1,20 @@
+<div  *ngIf="params">
+    <label
+        *ngIf="isCheckboxVisible"
+        for="selectAll"
+        class="ag-input-field-label ag-label ag-checkbox-label"
+    >
+        <div class="ag-wrapper ag-input-wrapper ag-checkbox-input-wrapper"  [ngClass]="{'ag-checked': selectAll}">
+        <input
+            (change)="onChange()"
+            [(ngModel)]="selectAll"
+            id="selectAll"
+            type="checkbox"
+            class="ag-input-field-input ag-checkbox-input"
+        >
+        </div>
+    </label>
+    <div #menuButton (click)="onMenuClicked()" *ngIf="params.enableMenu" class="customHeaderMenuButton">&#9776;</div>
+    <div class="customHeaderLabel">{{params.displayName}}</div>
+</div>
+  

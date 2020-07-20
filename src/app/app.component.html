@@ -1,4 +1,4 @@
-<div *ngIf="!error; else errorThrow">
+
     <ag-grid-angular 
         #agGrid
         class="ag-theme-alpine grid-container"
@@ -6,8 +6,7 @@
         [gridOptions]="gridOptions"
     >
     </ag-grid-angular>
-</div>
-<ng-template #errorThrow>
-    Error: {{error.message}}
-</ng-template>
+
+    <div *ngIf="error">Error: {{error.message}}</div>
+
 

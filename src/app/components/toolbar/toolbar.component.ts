@@ -1,13 +1,13 @@
 
 import { IToolPanel, IToolPanelParams } from 'ag-grid-community';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 @Component({
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss']
 })
 
-export class CustomToolBarComponent implements IToolPanel {
+export class CustomToolBarComponent implements IToolPanel, OnDestroy {
     params: IToolPanelParams;
     totalRecord: number = 0;
     totalSelect: number = 0;
@@ -19,16 +19,11 @@ export class CustomToolBarComponent implements IToolPanel {
 
     agInit(params: IToolPanelParams): void {
         this.params = params;
-        this.params.api.addEventListener('modelUpdated', () => {
-            this.totalRecord = this.params.api.getDisplayedRowCount();
-        });
-        this.params.api.addEventListener('selectionChanged', () => {
-            this.totalSelect = this.params.api.getSelectedRows().length;
-        });
+        this.params.api.addEventListener('modelUpdated', this.modelUpdated.bind(this));
+        this.params.api.addEventListener('selectionChanged', this.selectionChanged.bind(this));
     }
 
-    CheckedMode(e): void {
-        e.preventDefault();
+    checkedMode(): void {
         this.selectedMode = !this.selectedMode;
         const visible = this._getCurrentVisibility();
         if (visible) {
@@ -40,10 +35,22 @@ export class CustomToolBarComponent implements IToolPanel {
         this._setColumnVisibility('selection', !visible);
     }
 
+    modelUpdated(): void {
+        this.totalRecord = this.params.api.getDisplayedRowCount();
+    }
+
+    selectionChanged(): void {
+        this.totalSelect = this.params.api.getSelectedRows().length;
+    }
+
     private _getCurrentVisibility(): boolean {
         return this.params.columnApi.getColumn('selection').isVisible();
     }
     private _setColumnVisibility(columnKey: string, visible: boolean): void {
         this.params.columnApi.setColumnVisible(columnKey, visible);
+    }
+    ngOnDestroy() {
+        this.params.api.removeEventListener('modelUpdated', this.modelUpdated.bind(this));
+        this.params.api.removeEventListener('selectionChanged', this.selectionChanged.bind(this));
     }
 }

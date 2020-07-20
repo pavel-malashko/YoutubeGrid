@@ -1,9 +1,9 @@
 <div class="container">
     <span>
-        <dl style="font-size: large; padding: 30px 40px 10px 30px">
+        <dl class="dl-container">
             <dt class="totalStyle">Total records: <b>{{totalRecord}}</b></dt>
             <dt class="totalStyle">Selected: <b>{{totalSelect}}</b></dt>
-            <label>Select/Unselect All: <input type="checkbox" [checked]="selectedMode" (change)="CheckedMode($event)"/></label>
+            <label>Select/Unselect All: <input id="mode" type="checkbox" [checked]="selectedMode" (change)="checkedMode()"/></label>
         </dl>
     </span>
 </div>

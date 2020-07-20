@@ -1,31 +1,18 @@
-<div>
+<div *ngIf="params">
     <label
         *ngIf="isCheckboxVisible"
-        for="selectAll"
+        for="checkNode"
         class="ag-input-field-label ag-label ag-checkbox-label"
     >
-        <div class="ag-wrapper ag-input-wrapper ag-checkbox-input-wrapper"  [ngClass]="{'ag-checked': selectAll}">
+        <div class="ag-wrapper ag-input-wrapper ag-checkbox-input-wrapper" [ngClass]="{'ag-checked': checkboxValue}" >
         <input
-            (change)="onChange($event)"
-            [(ngModel)]="selectAll"
-            id="selectAll"
+            (change)="onChange()"
+            [value]="checkboxValue"
+            id="checkNode"
             type="checkbox"
             class="ag-input-field-input ag-checkbox-input"
         >
         </div>
-        <span [ngClass]="{'ag-icon-checkbox-unchecked': !selectAll, 'ag-icon-checkbox-checked': selectAll}"></span>
     </label>
-  
-    <div #menuButton (click)="onMenuClicked()" *ngIf="params.enableMenu" class="customHeaderMenuButton">&#9776;</div>
-    <div class="customHeaderLabel">{{params.displayName}}</div>
-    <div (click)="onSortRequested('asc', $event)" *ngIf="params.enableSorting" [ngClass]="ascSort"
-        class="customSortDownLabel">🠅
-    </div>
-    <div (click)="onSortRequested('desc', $event)" *ngIf="params.enableSorting" [ngClass]="descSort"
-        class="customSortUpLabel">🠇
-    </div>
-    <div (click)="onSortRequested('', $event)" *ngIf="params.enableSorting" [ngClass]="noSort"
-        class="customSortRemoveLabel">&times;
-    </div>
 </div>
   

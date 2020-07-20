@@ -1,17 +1,13 @@
 import { GridApi, ColumnApi } from 'ag-grid-community';
 
-export class RowData {
+export interface RowData {
     image: string;
     publishedAt: string;
     title: string;
     description: string;
-
-    constructor(init: Partial<RowData>) {
-        Object.assign(this, init);
-    }
 }
 
-export class SearchListResponse {
+export interface SearchListResponse {
     kind: string;
     etag: string;
     nextPageToken: string;
@@ -64,4 +60,9 @@ export interface Params {
     columnApi: ColumnApi;
     context: any;
     [key: string]: any;
+}
+
+export interface ContextItem {
+    name: string;
+    action(): void;
 }
